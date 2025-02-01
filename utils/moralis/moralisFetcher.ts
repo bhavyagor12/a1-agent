@@ -1,5 +1,6 @@
 export const moralisFetcher = async (url: string) => {
   const apiKey = process.env.NEXT_PUBLIC_MORALIS_API_KEY;
+    
 
   if (!apiKey) {
     throw new Error("Moralis API key is not defined.");
