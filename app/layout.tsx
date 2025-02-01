@@ -1,5 +1,4 @@
-import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { Pacifico } from "next/font/google";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -12,8 +11,9 @@ export const metadata = {
   description: "Trade,Automate,Allocate and Analyze",
 };
 
-const geistSans = Geist({
-  display: "swap",
+const pacifico = Pacifico({
+  weight: ["400"],
+  style: "normal",
   subsets: ["latin"],
 });
 
@@ -23,18 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
+    <html lang="en" className={pacifico.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="min-h-screen flex flex-col items-center">
-            {children}
-          </main>
-        </ThemeProvider>
+        <main className="min-h-screen flex flex-col items-center">
+          {children}
+        </main>
       </body>
     </html>
   );

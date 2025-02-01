@@ -1,5 +1,5 @@
 import { createConfig, http } from "wagmi";
-import { mainnet, base, optimism, polygon } from "wagmi/chains";
+import { base } from "wagmi/chains";
 import * as chains from "viem/chains";
 
 export const RPC_CHAIN_NAMES: Record<number, string> = {
@@ -30,12 +30,9 @@ export const getAlchemyHttpUrl = (chainId: number) => {
 };
 
 export const wagmiConfig = createConfig({
-  chains: [mainnet, chains.base],
+  chains: [chains.base],
   ssr: true,
   transports: {
-    [mainnet.id]: http(getAlchemyHttpUrl(1)),
     [base.id]: http(getAlchemyHttpUrl(8453)),
-    [optimism.id]: http(getAlchemyHttpUrl(10)),
-    [polygon.id]: http(getAlchemyHttpUrl(137)),
   },
 });
