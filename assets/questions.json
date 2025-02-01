@@ -1,0 +1,292 @@
+{
+    "questions": [
+        {
+            "id": "q1",
+            "question": "The Dragon’s Lair: You stumble upon a mysterious cave rumored to house a treasure chest guarded by a dragon. What do you do?",
+            "metrics": [
+                "RT",
+                "LA"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I boldly approach the cave, confident I can outsmart or distract the dragon for the treasure.",
+                    "scores": {
+                        "RT": 10,
+                        "LA": 0
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I carefully circle around to search for a secret entrance or a safer way in.",
+                    "scores": {
+                        "RT": 5,
+                        "LA": 5
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "I decide the risk is too high and walk away, preferring to keep my current gains safe.",
+                    "scores": {
+                        "RT": 0,
+                        "LA": 10
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q2",
+            "question": "The Spaceship Fuel Gamble: You’re piloting a spaceship running low on fuel. What do you do?",
+            "metrics": [
+                "RT",
+                "DMS"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "Attempt a risky but innovative maneuver to slingshot around a nearby planet to refuel mid-flight.",
+                    "scores": {
+                        "RT": 10,
+                        "DMS": 7
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "Follow the standard procedure: dock at the nearest station for a safe and predictable refuel.",
+                    "scores": {
+                        "RT": 5,
+                        "DMS": 10
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "Trust your gut and improvise an untested fix on the fly, even if it means taking a chance on a repair.",
+                    "scores": {
+                        "RT": 7,
+                        "DMS": 4
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q3",
+            "question": "The Startup Pitch (‘Trust me, bro’): At a networking event, a charismatic entrepreneur asks you to invest in their unproven startup. What do you do?",
+            "metrics": [
+                "RT",
+                "DMS"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "Dive in immediately, convinced that bold moves lead to big rewards.",
+                    "scores": {
+                        "RT": 10,
+                        "DMS": 4
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "Request more detailed data and projections before making any decision.",
+                    "scores": {
+                        "RT": 5,
+                        "DMS": 10
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "Politely decline; the lack of evidence makes you nervous about potential losses.",
+                    "scores": {
+                        "RT": 0,
+                        "DMS": 7
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q4",
+            "question": "The Bunker Decision: In a sudden crisis, you’re given the option to retreat to a secure bunker or continue on a risky mission. What do you choose?",
+            "metrics": [
+                "LA"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I choose the bunker immediately—safety first, no matter what.",
+                    "scores": {
+                        "LA": 10
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I weigh the pros and cons carefully, considering both safety and potential benefits.",
+                    "scores": {
+                        "LA": 5
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "I opt to continue the mission; I’m willing to risk some loss for a chance at a big win.",
+                    "scores": {
+                        "LA": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q5",
+            "question": "The Time Machine Investment: You’ve discovered a time machine offering you two investment deals. Which do you choose?",
+            "metrics": [
+                "THB"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "Invest in a plan that will double your money in a year—patience pays off over time.",
+                    "scores": {
+                        "THB": 10
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "Take a shorter-term offer that promises a quick but smaller return in just a few months.",
+                    "scores": {
+                        "THB": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q6",
+            "question": "Zombie Apocalypse Leadership: In a zombie apocalypse, would you focus on long-term recovery or immediate survival?",
+            "metrics": [
+                "THB"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I focus on long-term recovery: building sustainable communities even if it takes time.",
+                    "scores": {
+                        "THB": 10
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I concentrate on immediate survival and quick fixes, prioritizing short-term gains.",
+                    "scores": {
+                        "THB": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q7",
+            "question": "The Treasure Map: You find a worn treasure map. Do you follow it despite the risks?",
+            "metrics": [
+                "LA"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I ignore the map altogether, preferring not to risk encountering any traps.",
+                    "scores": {
+                        "LA": 10
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I examine the map carefully, taking precautions before deciding whether to follow it.",
+                    "scores": {
+                        "LA": 5
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "I embrace the adventure, convinced that the potential treasure outweighs the risks.",
+                    "scores": {
+                        "LA": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q8",
+            "question": "Spaceship Repair vs. Mars Gamble: Your spaceship malfunctions. How do you proceed?",
+            "metrics": [
+                "DMS"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I perform a methodical, step-by-step repair to ensure everything works correctly.",
+                    "scores": {
+                        "DMS": 10
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I trust my instincts and take the gamble on the Mars maneuver, even if it breaks some conventional rules.",
+                    "scores": {
+                        "DMS": 0
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q9",
+            "question": "The Test of the Divine: You find yourself at the feet of Lord Shiva, who offers you two paths: one is perilous but full of immense rewards, and the other is calm but steady. Which path do you choose?",
+            "metrics": [
+                "RT",
+                "LA"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I choose the perilous path, seeking the rewards of greatness like a warrior in battle.",
+                    "scores": {
+                        "RT": 10,
+                        "LA": 0
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I select the calm path, believing in steady progress and wisdom over rash actions.",
+                    "scores": {
+                        "RT": 0,
+                        "LA": 10
+                    }
+                },
+                {
+                    "option": "C",
+                    "text": "I am torn between both paths, but ultimately I lean towards the calm path after much thought, like Arjuna before his battle.",
+                    "scores": {
+                        "RT": 5,
+                        "LA": 5
+                    }
+                }
+            ]
+        },
+        {
+            "id": "q10",
+            "question": "The 'Cool Hat' Decision: At a quirky market, a vendor offers you a 'cool hat' that might bring fortunes but diverts funds from your plan. Do you buy it?",
+            "metrics": [
+                "DMS"
+            ],
+            "options": [
+                {
+                    "option": "A",
+                    "text": "I impulsively buy the hat, trusting that a bit of spontaneity can lead to surprising benefits.",
+                    "scores": {
+                        "DMS": 0
+                    }
+                },
+                {
+                    "option": "B",
+                    "text": "I analyze my current strategy, decide the hat isn’t a wise investment, and pass.",
+                    "scores": {
+                        "DMS": 10
+                    }
+                }
+            ]
+        }
+    ]
+}
