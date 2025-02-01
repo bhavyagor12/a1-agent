@@ -2,17 +2,11 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { TokensTable } from "./TokensTable";
-import useSWR from "swr";
 import { Chain, isAddress } from "viem";
-import {
-  NETWORKS_EXTRA_DATA,
-  getBlockExplorerAddressLink,
-  getChainNameForMoralis,
-  getChainNameForOpensea,
-  moralisFetcher,
-  openseaNftFetcher,
-} from "~~/utils/scaffold-eth";
 import { useAddressStore, useNetworkBalancesStore } from "@/utils/store/store";
+import { getBlockExplorerAddressLink, getChainNameForMoralis, NETWORKS_EXTRA_DATA } from "@/utils/utils";
+import { moralisFetcher } from "@/utils/moralis/moralisFetcher";
+import useSWR from "swr";
 
 export const NetworkCard = ({ chain }: { chain: Chain }) => {
   const { setBalance } = useNetworkBalancesStore();
@@ -29,18 +23,6 @@ export const NetworkCard = ({ chain }: { chain: Chain }) => {
         )}&exclude_spam=true&exclude_unverified_contracts=true&exclude_native=false`
       : null,
     moralisFetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 60000,
-    },
-  );
-
-  const { data: nftData } = useSWR(
-    shouldFetch
-      ? `https://api.opensea.io/api/v2/chain/${getChainNameForOpensea(chain.id)}/account/${address}/nfts?limit=5`
-      : null,
-    openseaNftFetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

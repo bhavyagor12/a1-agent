@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-
+import * as chains from "viem/chains";
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
  * @param {('error' | 'success')} type - The type of message, either 'error' or 'success'.
@@ -14,6 +14,15 @@ export function encodedRedirect(
 ) {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 }
+
+type ChainAttributes = {
+  // color | [lightThemeColor, darkThemeColor]
+  color: string | [string, string];
+  // Used to fetch price by providing mainnet token address
+  // for networks having native currency other than ETH
+  nativeCurrencyTokenAddress?: string;
+  icon?: string;
+};
 
 export const getChainNameForMoralis = (id: number) => {
   switch (id) {
@@ -30,4 +39,31 @@ export const getChainNameForMoralis = (id: number) => {
     default:
       return "eth";
   }
+};
+
+export function getBlockExplorerAddressLink(
+  address: string,
+  network: chains.Chain = chains.mainnet,
+) {
+  const blockExplorerBaseURL = network.blockExplorers?.default?.url;
+  if (network.id === chains.hardhat.id) {
+    return `/blockexplorer/address/${address}`;
+  }
+
+  if (!blockExplorerBaseURL) {
+    return `https://etherscan.io/address/${address}`;
+  }
+
+  return `${blockExplorerBaseURL}/address/${address}`;
+}
+
+export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
+  [chains.mainnet.id]: {
+    color: "#ff8b9e",
+    icon: "/mainnet.svg",
+  },
+  [chains.base.id]: {
+    color: "#0052ff",
+    icon: "/base.svg",
+  },
 };
