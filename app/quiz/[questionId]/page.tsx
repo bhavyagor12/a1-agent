@@ -7,12 +7,11 @@ type PageProps = {
 };
 
 const QuestionPage: NextPage<PageProps> = async (props: PageProps) => {
-  const questionId = await props.params;
-
+  const { questionId } = await props.params;
   if (!questionId) {
     return null;
   }
-  return <Quiz questionId={questionId as string} />;
+  return <Quiz questionId={questionId} />;
 };
 
 export default QuestionPage;

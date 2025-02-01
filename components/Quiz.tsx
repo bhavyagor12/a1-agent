@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface Option {
   option: string;
@@ -22,10 +23,11 @@ function formatQuestionId(id: string) {
 }
 
 export default function Quiz({ questionId }: { questionId: string }) {
+  const router = useRouter();
   const { data: question } = useQuery({
     queryKey: ["question", questionId],
     queryFn: async () => {
-      const response = await fetch(`/api/questions/${questionId}`);
+      const response = await fetch(`/api/quiz?questionId=${questionId}`);
       return response.json();
     },
   });
@@ -38,18 +40,20 @@ export default function Quiz({ questionId }: { questionId: string }) {
   }
   return (
     <div
-      className="p-6 rounded-2xl w-full shadow-lg relative h-[100vh] flex flex-col items-center justify-around"
+      className="p-6 bg-white text-black rounded-2xl w-full shadow-lg relative h-[100vh] flex flex-col items-center justify-around"
       style={{
         backgroundImage: `url('${question.image}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col  text-white items-center">
         <h2 className="text-lg font-bold text-center mb-4">
           {formatQuestionId(question.id)}
         </h2>
-        <h2 className="text-lg font-bold text-center mb-4">{question.text}</h2>
+        <h2 className="text-lg font-bold text-center mb-4">
+          {question.question}
+        </h2>
       </div>
 
       {/* Input Fields */}
@@ -67,7 +71,15 @@ export default function Quiz({ questionId }: { questionId: string }) {
       </div>
 
       {/* Submit Button */}
-      <Button className="w-full mt-4"> Submit</Button>
+      <Button
+        className="w-full mt-4"
+        onClick={() => {
+          router.push(`/bq/${Number(questionId) + 1}`);
+        }}
+      >
+        {" "}
+        Submit
+      </Button>
     </div>
   );
 }
