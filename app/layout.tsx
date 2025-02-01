@@ -1,5 +1,6 @@
-import { Pacifico } from "next/font/google";
+import { Unbounded } from "next/font/google";
 import "./globals.css";
+import { A1AppWithProviders } from "@/components/A1AppWithProviders";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -11,7 +12,7 @@ export const metadata = {
   description: "Trade,Automate,Allocate and Analyze",
 };
 
-const pacifico = Pacifico({
+const pacifico = Unbounded({
   weight: ["400"],
   style: "normal",
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className={pacifico.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
-          {children}
+          <A1AppWithProviders> {children} </A1AppWithProviders>
         </main>
       </body>
     </html>
