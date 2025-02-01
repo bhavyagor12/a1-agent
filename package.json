@@ -12,6 +12,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@tanstack/react-query": "^5.66.0",
     "autoprefixer": "10.4.20",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -20,7 +21,9 @@
     "next-themes": "^0.4.3",
     "prettier": "^3.3.3",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "viem": "^2.22.17",
+    "wagmi": "^2.14.9"
   },
   "devDependencies": {
     "@types/node": "22.10.2",
