@@ -1,47 +1,48 @@
-import {computeMaxScore, computeUserScore, getUserSession} from '../../../../utils/quiz/index.ts';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import {
+  computeMaxScore,
+  computeUserScore,
+  getUserSession,
+} from "../../../../utils/quiz/index";
+import { NextResponse } from "next/server";
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const { userId } = req.body;
-    if (!userId) {
-      return res.status(400).json({ error: 'userId is required' });
-    }
+export async function POST(req: Request) {
+  const { userId } = await req.json();
 
-    const session = await getUserSession(userId);
-    if (!session) {
-      return res.status(400).json({ error: 'No quiz session found for this user.' });
-    }
-    if (!session) {
-      return res.status(400).json({ error: 'No quiz session found for this user.' });
-    }
+  if (!userId) {
+    return NextResponse.json({ error: "userId is required" }, { status: 400 });
+  }
 
-    const userAnswers = session.answers;
-    const metricsList = ['RT', 'LA', 'THB', 'DMS'];
-    const metricResults: { [key: string]: number } = {};
+  const session = await getUserSession(userId);
+  if (!session) {
+    return NextResponse.json(
+      { error: "No quiz session found for this user." },
+      { status: 400 },
+    );
+  }
 
-    metricsList.forEach(async metric => {
-      const userScore = computeUserScore(userId, metric);
-      const maxScore = computeMaxScore(metric);
-      const percentage = maxScore > 0 ? (await userScore / maxScore) * 100 : 0;
-      metricResults[metric] = Math.round(percentage);
-    });
+  const userAnswers = session.answers;
+  const metricsList = ["RT", "LA", "THB", "DMS"];
+  const metricResults: { [key: string]: number } = {};
 
-    const RT = metricResults['RT'];
-    const LA = metricResults['LA'];
-    const THB = metricResults['THB'];
-    const DMS = metricResults['DMS'];
+  for (const metric of metricsList) {
+    const userScore = await computeUserScore(userId, metric);
+    const maxScore = computeMaxScore(metric);
+    const percentage = maxScore > 0 ? (userScore / maxScore) * 100 : 0;
+    metricResults[metric] = Math.round(percentage);
+  }
 
-    const RAS = Math.round((RT * 0.4) + ((100 - LA) * 0.3) + (THB * 0.2) + (DMS * 0.1));
+  const RT = metricResults["RT"];
+  const LA = metricResults["LA"];
+  const THB = metricResults["THB"];
+  const DMS = metricResults["DMS"];
 
-    let archetype = '';
-    if (RAS <= 35) archetype = 'Conservative Guardian';
-    else if (RAS <= 65) archetype = 'Balanced Strategist';
-    else if (RAS <= 85) archetype = 'Maverick Gambler';
-    else archetype = 'Visionary Builder';
+  const RAS = Math.round(RT * 0.4 + (100 - LA) * 0.3 + THB * 0.2 + DMS * 0.1);
 
-    res.json({ metrics: metricResults, RAS, archetype });
-    if (!userId) {
-      return new Response(JSON.stringify({ error: 'userId is required' }), { status: 400 });
-    }
-    return new Response(JSON.stringify({ error: 'Failed to create user session' }), { status: 500 });
- }
+  let archetype = "";
+  if (RAS <= 35) archetype = "Conservative Guardian";
+  else if (RAS <= 65) archetype = "Balanced Strategist";
+  else if (RAS <= 85) archetype = "Maverick Gambler";
+  else archetype = "Visionary Builder";
+
+  return NextResponse.json({ metrics: metricResults, RAS, archetype });
+}

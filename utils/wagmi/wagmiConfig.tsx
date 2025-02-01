@@ -1,7 +1,7 @@
 import { createConfig, http } from "wagmi";
 import { base } from "wagmi/chains";
 import * as chains from "viem/chains";
-
+import { coinbaseWallet } from "wagmi/connectors";
 export const RPC_CHAIN_NAMES: Record<number, string> = {
   [chains.mainnet.id]: "eth-mainnet",
   [chains.goerli.id]: "eth-goerli",
@@ -35,4 +35,9 @@ export const wagmiConfig = createConfig({
   transports: {
     [base.id]: http(getAlchemyHttpUrl(8453)),
   },
+  connectors: [
+    coinbaseWallet({
+      appName: "onchainkit",
+    }),
+  ],
 });

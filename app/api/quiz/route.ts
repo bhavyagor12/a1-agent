@@ -11,13 +11,13 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  // const sessionCreated = await createUserSession(userId);
-  // if (!sessionCreated) {
-  //   return new Response(
-  //     JSON.stringify({ error: "Failed to create user session" }),
-  //     { status: 500 },
-  //   );
-  // }
+  const sessionCreated = await createUserSession(userId);
+  if (!sessionCreated) {
+    return new Response(
+      JSON.stringify({ error: "Failed to create user session" }),
+      { status: 500 },
+    );
+  }
 
   const quizData = await getQuizData();
   const question = quizData.questions[Number(questionId) - 1];

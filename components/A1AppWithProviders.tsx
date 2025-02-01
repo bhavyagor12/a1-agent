@@ -12,7 +12,7 @@ import { ThemeProvider } from "next-themes";
 const A1App = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <div className={`flex flex-col min-h-screen `}>
+      <div className="w-full max-w-[430px] min-h-screen">
         <main className="relative flex flex-col flex-1">{children}</main>
       </div>
       <Toaster />
@@ -43,6 +43,19 @@ export const A1AppWithProviders = ({
       <OnchainKitProvider
         apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
         chain={base} // add baseSepolia for testing
+        config={{
+          appearance: {
+            name: "YOUR PROJECT NAME", // Displayed in modal header
+            logo: "https://your-logo.com", // Displayed in modal header
+            mode: "auto", // 'light' | 'dark' | 'auto'
+            theme: "default", // 'default' or custom theme
+          },
+          wallet: {
+            display: "modal",
+            termsUrl: "https://...",
+            privacyUrl: "https://...",
+          },
+        }}
       >
         <WagmiProvider config={wagmiConfig}>
           <QueryClientProvider client={queryClient}>

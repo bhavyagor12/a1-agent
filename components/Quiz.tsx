@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { notification } from "@/utils/notification";
 
 interface Option {
   option: string;
@@ -35,6 +36,34 @@ export default function Quiz({ questionId }: { questionId: string }) {
   const [selectedOption, setSelectedOption] = useState<Option["option"] | null>(
     null,
   );
+
+  const submitAnswer = async () => {
+    if (!selectedOption) {
+      notification.error("Please select an option");
+      return;
+    }
+    if (questionId === "10") {
+      return;
+    }
+    const response = await fetch("/api/quiz/answer", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: "123",
+        questionId,
+        option: selectedOption,
+      }),
+    });
+    return response.json();
+  };
+  const submitAndAnswerMutation = useMutation({
+    mutationFn: () => submitAnswer(),
+    onSuccess: () => {
+      router.push(`/quiz/${Number(questionId) + 1}`);
+    },
+    onError: (error) => {
+      console.error("Error submitting answer:", error);
+    },
+  });
   if (!question) {
     return <div>Loading...</div>;
   }
@@ -74,7 +103,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
       <Button
         className="w-full mt-4"
         onClick={() => {
-          router.push(`/bq/${Number(questionId) + 1}`);
+          submitAndAnswerMutation.mutate();
         }}
       >
         {" "}

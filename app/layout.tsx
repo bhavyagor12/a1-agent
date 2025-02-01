@@ -1,7 +1,7 @@
 import { Unbounded } from "next/font/google";
 import "./globals.css";
 import { A1AppWithProviders } from "@/components/A1AppWithProviders";
-
+import "@coinbase/onchainkit/styles.css";
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";

@@ -1,9 +1,13 @@
 import path from "path";
 import fs from "fs";
-import supabase from "../supabase/client";
+import { createClient } from "../supabase/browserclient.ts";
 
 export function getQuizData() {
-  const questionsFilePath = path.join(process.cwd(),"public", "questions.json");
+  const questionsFilePath = path.join(
+    process.cwd(),
+    "public",
+    "questions.json",
+  );
   let quizData;
   try {
     const fileContent = fs.readFileSync(questionsFilePath).toString();
@@ -16,21 +20,23 @@ export function getQuizData() {
 }
 
 export async function createUserSession(userId: string) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("user_sessions")
     .insert([{ user_id: userId }]);
-  if (error) {
+  if(error) {
     console.error("Error creating user session:", error);
-    return false;
+    return error;
   }
   return true;
 }
 
 // Get user session from Supabase
 export async function getUserSession(userId: string) {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("user_sessions")
-    .select("question_id, option_chosen")
+    .select("question_id, answer")
     .eq("user_id", userId)
     .limit(1);
 
@@ -46,13 +52,14 @@ export async function getUserSession(userId: string) {
 export async function saveUserAnswer(
   userId: string,
   questionId: string,
-  option: string,
+  answer: string,
 ) {
+  const supabase = createClient();
   const { error } = await supabase.from("user_sessions").upsert([
     {
       user_id: userId,
       question_id: questionId,
-      option_chosen: option,
+      answer: answer,
     },
   ]);
   if (error) {
