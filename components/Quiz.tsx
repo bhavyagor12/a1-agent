@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { notification } from "@/utils/notification";
+import Loading from "@/app/loading";
 
 interface Option {
   option: string;
@@ -16,15 +17,15 @@ interface Option {
 }
 
 function formatQuestionId(id: string) {
-  const match = id.match(/\d+/); // Extract the number from the ID
+  const match = id.match(/\d+/);
   if (match) {
     return `Question ${match[0]}`;
   }
-  return "Question"; // Default fallback if no number is found
+  return "Question";
 }
 
 export default function Quiz({ questionId }: { questionId: string }) {
-  const router = useRouter();
+  const { push } = useRouter();
   const { data: question } = useQuery({
     queryKey: ["question", questionId],
     queryFn: async () => {
@@ -58,14 +59,19 @@ export default function Quiz({ questionId }: { questionId: string }) {
   const submitAndAnswerMutation = useMutation({
     mutationFn: () => submitAnswer(),
     onSuccess: () => {
-      router.push(`/quiz/${Number(questionId) + 1}`);
+      if (!selectedOption) return;
+      push(`/quiz/${Number(questionId) + 1}`);
     },
     onError: (error) => {
       console.error("Error submitting answer:", error);
     },
   });
   if (!question) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-[100vh]">
+        <Loading /> 
+      </div>
+    );
   }
   return (
     <div
@@ -99,14 +105,12 @@ export default function Quiz({ questionId }: { questionId: string }) {
         ))}
       </div>
 
-      {/* Submit Button */}
       <Button
         className="w-full mt-4"
         onClick={() => {
           submitAndAnswerMutation.mutate();
         }}
       >
-        {" "}
         Submit
       </Button>
     </div>

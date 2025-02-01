@@ -1,3 +1,15 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Image } from "lucide-react";
+
 interface Token {
   name: string;
   symbol: string;
@@ -31,32 +43,44 @@ export const TokensTable = ({ tokens }: { tokens: Token[] }) => {
   }
 
   return (
-    <div>
-      <div className="max-h-48 overflow-x-auto">
-        <table className="table table-zebra">
-          <thead>
-            <tr>
-              <th>Token</th>
-              <th>Balance</th>
-              <th>Balance in USD</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tokens.map((token, index) => (
-              <tr key={index}>
-                <td>{`${token.name} (${token.symbol})`}</td>
-                <td>{formatTokenBalance(token.balance, token.decimals)}</td>
-                <td>
-                  ≈$
-                  {token.usd_value !== null
-                    ? token.usd_value.toFixed(2)
-                    : "N/A"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <ScrollArea className="h-full w-full overflow-scroll">
+      <Table className="table-auto text-xs">
+        <TableHeader>
+          <TableRow className="bg-muted">
+            <TableHead>Token</TableHead>
+            <TableHead>Balance</TableHead>
+            <TableHead>USD Value</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="h-[30px] overflow-scroll">
+          {tokens.map((token: any, index) => (
+            <TableRow
+              key={index}
+              className={cn(index % 2 === 0 && "bg-muted/50")}
+            >
+              <TableCell className="flex items-center gap-2">
+                {token.logo ? (
+                  <img
+                    src={token.logo}
+                    alt={token.symbol}
+                    className="w-5 h-5"
+                  />
+                ) : (
+                  <Image className="w-5 h-5 text-gray-400" />
+                )}
+                {`${token.name} (${token.symbol})`}
+              </TableCell>
+              <TableCell>
+                {formatTokenBalance(token.balance, token.decimals)}
+              </TableCell>
+              <TableCell>
+                ≈$
+                {token.usd_value !== null ? token.usd_value.toFixed(2) : "N/A"}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </ScrollArea>
   );
 };

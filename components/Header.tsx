@@ -1,4 +1,5 @@
 "use client";
+import { pacifico } from "@/app/page";
 import WalletWrapper from "./WalletWrapper";
 
 export default function Header() {
@@ -9,8 +10,9 @@ export default function Header() {
         text="Get Started"
         withWalletAggregator={true}
       />
-
-      <h1 className="text-lg font-semibold mt-4">Project Name</h1>
+      <h1 className="text-lg font-semibold mt-4">
+        <span className={pacifico.className}>Project Name</span>
+      </h1>
     </header>
   );
 }
