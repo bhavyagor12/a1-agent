@@ -19,10 +19,6 @@ export default function Result() {
       return response.json();
     },
   });
-  if (!data) return null;
-  if (data.personality === "") {
-    redirect("/quiz/1");
-  }
   const personalityKey = data.personality as keyof typeof personalities;
   const imageSrc =
     personalities[personalityKey as keyof typeof personalities]?.image ??
@@ -59,7 +55,6 @@ export default function Result() {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
     window.open(twitterUrl, "_blank");
   };
-
   return (
     <div className="w-full h-[100vh] flex flex-col p-4 gap-4">
       <Header />

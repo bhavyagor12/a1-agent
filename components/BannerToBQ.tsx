@@ -35,10 +35,9 @@ export const BannerToBQ = () => {
             <Button
               className="text-[10px] p-2"
               onClick={() => {
-                if (data.personality === "") {
+                if (data.error || data.personality === "") {
                   push("/quiz/1");
-                }
-                else {
+                } else {
                   push("/quiz/result");
                 }
               }}
