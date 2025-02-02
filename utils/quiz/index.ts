@@ -75,6 +75,55 @@ export function computeMaxScore(metric: string) {
   return totalMax;
 }
 
+export async function saveUser({
+  userId,
+  personality: archetype,
+  RT,
+  LA,
+  THB,
+  DMS,
+  RAS,
+}: {
+  userId: string;
+  personality: string;
+  RT: number;
+  LA: number;
+  THB: number;
+  DMS: number;
+  RAS: number;
+}) {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("users").upsert([
+    {
+      user_id: userId,
+      personality: archetype,
+      RT,
+      LA,
+      THB,
+      DMS,
+      RAS,
+    },
+  ]);
+  if (error) {
+    console.error("Error saving user:", error);
+    return error;
+  }
+  return data;
+}
+
+export async function getUser(userId: string) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("users")
+    .select()
+    .eq("user_id", userId).limit(1);
+  if (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
+  return data[0];
+}
+
 // Compute user score for a metric
 export async function computeUserScore(userId: string, metric: string) {
   const session = await getUserSession(userId);

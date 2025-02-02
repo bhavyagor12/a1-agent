@@ -51,7 +51,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
       method: "POST",
       body: JSON.stringify({
         userId: address,
-        questionId,
+        questionId:question.id,
         option: selectedOption,
       }),
     });

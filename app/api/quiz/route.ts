@@ -3,14 +3,7 @@ import { getQuizData } from "../../../utils/quiz/index.ts";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const userId = "123";
   const questionId = searchParams.get("questionId");
-  if (!userId) {
-    return new Response(JSON.stringify({ error: "userId is required" }), {
-      status: 400,
-    });
-  }
-
   const quizData = await getQuizData();
   const question = quizData.questions[Number(questionId) - 1];
   if (!quizData) {
