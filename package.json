@@ -11,6 +11,7 @@
   "dependencies": {
     "@coinbase/onchainkit": "^0.36.9",
     "@heroicons/react": "^2.2.0",
+    "@langchain/core": "^0.3.37",
     "@langchain/langgraph": "^0.2.44",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.5",

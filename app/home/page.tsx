@@ -11,14 +11,6 @@ import useSWR from "swr";
 import { Address, isAddress } from "viem";
 import { useAccount } from "wagmi";
 import * as chains from "viem/chains";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { ChatModal } from "../chat/chatModal";
-import { Bot } from "lucide-react";
 
 export default function Home() {
   const { address } = useAccount();
@@ -78,15 +70,6 @@ export default function Home() {
         <h1 className="text-[12px] font-bold text-white">Defi Positions</h1>
         <MobileStatsCard address={address as Address} />
       </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Bot className="absolute bottom-4 right-4 z-50" />
-        </DialogTrigger>
-        <DialogContent className="bg-gray-800 p-0 rounded-lg w-[360px] h-[640px]">
-          <DialogTitle></DialogTitle>
-          <ChatModal userId={address as string} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

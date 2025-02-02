@@ -34,7 +34,7 @@ export default function Header() {
             redirect("/home");
           }}
         >
-          Project Name
+          asset
         </span>
         <Dialog>
           <DialogTrigger asChild>

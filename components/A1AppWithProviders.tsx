@@ -45,8 +45,7 @@ export const A1AppWithProviders = ({
         chain={base} // add baseSepolia for testing
         config={{
           appearance: {
-            name: "YOUR PROJECT NAME", // Displayed in modal header
-            logo: "https://your-logo.com", // Displayed in modal header
+            name: "asset", // Displayed in modal header
             mode: "auto", // 'light' | 'dark' | 'auto'
             theme: "default", // 'default' or custom theme
           },
