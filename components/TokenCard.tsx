@@ -39,17 +39,23 @@ const TokenCard = ({ tokenData }: { tokenData: TokenData }) => {
             </span>
           </div>
           <div className="flex justify-between items-center gap-4 text-[12px]">
-            <ClockIcon size={12} />
-            <span className="font-bold text-[12px] ">
+            <ClockIcon size={14} className="text-gray-500" />
+            <span
+              className={`font-bold text-[12px] ${tokenData.gainer ? "text-green-500" : "text-red-500"
+                }`}
+            >
               {truncatePrice(tokenData.price_24h_percent_change)}%
             </span>
           </div>
           <div className="flex justify-between items-center gap-4 text-[12px]">
-            <CalendarDays size={12} />
-            <span className="font-bold text-[12px]">
+            <CalendarDays size={14} className="text-gray-500" />
+            <span
+              className={`font-bold text-[12px] ${tokenData.gainer ? "text-green-500" : "text-red-500"
+                }`}
+            >
               {truncatePrice(tokenData.price_7d_percent_change)}%
             </span>
-          </div>
+          </div>{" "}
         </div>
       </CardContent>
     </Card>

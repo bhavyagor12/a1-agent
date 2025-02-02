@@ -1,10 +1,14 @@
+import { moralisFetcher } from "@/utils/moralis/moralisFetcher";
 import {
   Circle,
   ShoppingBasketIcon as Collection,
   ArrowRightLeft,
   ArrowLeftRight,
   Coins,
+  Loader,
 } from "lucide-react";
+import useSWR from "swr";
+import { Address, isAddress } from "viem";
 
 interface StatsData {
   nfts: string;
@@ -28,7 +32,7 @@ interface StatCircleProps {
   icon: React.ReactNode;
 }
 
-const StatCircle: React.FC<StatCircleProps> = ({ value, label, icon }) => (
+export const StatCircle: React.FC<StatCircleProps> = ({ value, label, icon }) => (
   <div className="flex flex-col items-center">
     <div className="relative">
       <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
@@ -42,7 +46,23 @@ const StatCircle: React.FC<StatCircleProps> = ({ value, label, icon }) => (
   </div>
 );
 
-export const StatsCircles: React.FC<{ data: StatsData }> = ({ data }) => {
+export const StatsCircles: React.FC<{ address: Address }> = ({ address }) => {
+  const shouldFetch = address && isAddress(address);
+
+  const { data } = useSWR(
+    shouldFetch
+      ? `https://deep-index.moralis.io/api/v2.2/wallets/${address}/stats?chain=base`
+      : null,
+    moralisFetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 60000,
+    },
+  );
+  if (data === undefined || !shouldFetch) {
+    return null;
+  }
   return (
     <div className="flex items-center justify-center gap-4">
       <StatCircle
