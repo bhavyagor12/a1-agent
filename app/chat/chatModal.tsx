@@ -71,15 +71,16 @@ export function ChatModal({ userId }: { userId: string }) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 p-4 h-full overflow-y-auto space-y-2">
+      <div className="flex-1 w-[350px] p-4 h-full overflow-y-auto space-y-2">
         {messages.map((msg, idx) => {
           const alignment = isUserMessage(msg)
-            ? "self-end bg-blue-600"
-            : "self-start bg-gray-600";
+            ? "flex-end bg-blue-600"
+            : "flex-start bg-gray-600";
+          if(!msg.kwargs.content) return null;
           return (
             <div
               key={idx}
-              className={`px-3 py-2 rounded-lg max-w-[80%] text-white ${alignment}`}
+              className={`px-3 py-2 rounded-lg max-w-[80%] text-white ${alignment} text-[8px]`}
             >
               {msg.kwargs.content}
             </div>
