@@ -4,9 +4,11 @@ import DefiStrategyCard from "@/components/defi-strategy";
 import Header from "@/components/Header";
 import PersonalityProfile from "@/components/PersonalityProfile";
 import RadialProgress from "@/components/radical-progress";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 import { useAccount } from "wagmi";
+import html2canvas from "html2canvas";
 
 export default function Result() {
   const { address } = useAccount();
@@ -25,6 +27,39 @@ export default function Result() {
   const imageSrc =
     personalities[personalityKey as keyof typeof personalities]?.image ??
     "/images/default.png";
+
+  const capturePage = () => {
+    html2canvas(document.body).then((canvas) => {
+      const imgUrl = canvas.toDataURL("image/png"); // Capture the page as a PNG image
+      downloadImage(imgUrl); // Automatically download the image
+    });
+  };
+
+  const downloadImage = (imageUrl: string) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "screenshot.png"; // Specify the name of the downloaded file
+    link.click();
+
+    const scoresText = `
+    Realistic Thinking: ${data.RT}
+    Loss Aversion: ${data.LA}
+    Decision Making: ${data.DMS}
+    Time Horizon Bias: ${data.THB}
+  `;
+    const tweetText = `
+    Check out my personality and risk assessment! 
+
+    Personality: ${data.personality}
+    ${scoresText}
+
+    Take the quiz and find out yours at: https://a1-agent-seven.vercel.app
+  `.trim();
+
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(twitterUrl, "_blank");
+  };
+
   return (
     <div className="w-full h-[100vh] flex flex-col p-4 gap-4">
       <Header />
@@ -70,6 +105,7 @@ export default function Result() {
             desiTwist={personalities[personalityKey].defi.desi_twist}
           />
         </div>
+        <Button onClick={capturePage}>Share on Twitter</Button>
       </div>
     </div>
   );
