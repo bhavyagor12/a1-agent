@@ -1,4 +1,3 @@
-import { PageProps } from "@/.next/types/app/layout";
 import Quiz from "@/components/Quiz";
 import {
   dehydrate,

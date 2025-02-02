@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
-export const pacifico = Pacifico({
+const pacifico = Pacifico({
   weight: ["400"],
   style: "normal",
   subsets: ["latin"],

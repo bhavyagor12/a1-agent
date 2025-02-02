@@ -33,7 +33,7 @@ export const personalities = {
   },
   "Maverick Gambler": {
     "description": "The Maverick Gambler is a bold and daring risk-taker who thrives on excitement and opportunity. They are driven by the thrill of the unknown and are always looking for the next big challenge. Their confidence and willingness to act quickly make them natural leaders, though they can sometimes be impulsive. They embrace uncertainty and are unafraid of setbacks, seeing them as opportunities to learn and improve.",
-    "image":"..public/images/maverick_gambler.png",
+    "image": "..public/images/maverick_gambler.png",
     "characteristics": [
       "Thrives on excitement and high-energy situations.",
       "Willing to take bold risks without hesitation.",

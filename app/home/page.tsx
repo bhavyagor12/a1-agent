@@ -51,7 +51,7 @@ export default function Home() {
           Gainers - ERC20 Tokens
         </h1>
         <div className="flex overflow-x-auto gap-4 mt-3 pb-4 scrollbar-hide flex-shrink-0">
-          {gainers.map((token, index) => (
+          {gainers.map((token: any, index: any) => (
             <TokenCard key={index} tokenData={token} />
           ))}
         </div>
@@ -61,12 +61,12 @@ export default function Home() {
           Losers - ERC20 Tokens
         </h1>
         <div className="flex overflow-x-auto gap-4 mt-3 pb-4 scrollbar-hide flex-shrink-0">
-          {losers.map((token, index) => (
+          {losers.map((token: any, index: any) => (
             <TokenCard key={index} tokenData={token} />
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 pb-4">
         <h1 className="text-[12px] font-bold text-white">Defi Positions</h1>
         <MobileStatsCard address={address as Address} />
       </div>

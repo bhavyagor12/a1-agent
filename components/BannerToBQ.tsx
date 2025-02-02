@@ -3,8 +3,20 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
+import { useQuery } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 export const BannerToBQ = () => {
   const { push } = useRouter();
+  const { address } = useAccount();
+  const { data, isPending } = useQuery({
+    queryKey: ["user", address],
+    queryFn: async () => {
+      const response = await fetch(`/api/user?userId=${address}`);
+      return response.json();
+    },
+  });
+  if (isPending) return <Loader className="w-10 h-10" />;
   return (
     <Card className="bg-[#1a1a1a] p-6 rounded-xl flex-shrink-0">
       <div className="flex flex-col md:flex-row justify-between items-start gap-6">
@@ -23,7 +35,12 @@ export const BannerToBQ = () => {
             <Button
               className="text-[10px] p-2"
               onClick={() => {
-                push("/quiz/1");
+                if (data.personality === "") {
+                  push("/quiz/1");
+                }
+                else {
+                  push("/quiz/result");
+                }
               }}
             >
               Check Now

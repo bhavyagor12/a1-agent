@@ -83,7 +83,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
       return response.json();
     },
     onSuccess: () => {
-      // push("/result");
+      push("/quiz/result");
     },
     onError: (error) => {
       console.error("Error submitting answer:", error);
@@ -122,7 +122,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
         </div>
 
         <div className="w-full space-y-3">
-          {question.options.map((option) => (
+          {question.options.map((option:any) => (
             <div
               key={option.option}
               onClick={() => setSelectedOption(option.option)}

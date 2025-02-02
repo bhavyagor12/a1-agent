@@ -52,14 +52,13 @@ const Notification = ({
   position = DEFAULT_POSITION,
 }: TNotificationProps) => {
   return toast.custom(
-    (t) => (
+    (t: any) => (
       <div
         className={`flex flex-row items-start justify-between max-w-sm rounded-xl shadow-center shadow-accent bg-base-200 p-4 transform-gpu relative transition-all duration-500 ease-in-out space-x-2
-        ${
-          position.substring(0, 3) == "top"
+        ${position.substring(0, 3) == "top"
             ? `hover:translate-y-1 ${t.visible ? "top-0" : "-top-96"}`
             : `hover:-translate-y-1 ${t.visible ? "bottom-0" : "-bottom-96"}`
-        }`}
+          }`}
       >
         <div className="text-2xl self-start">
           {icon ? icon : ENUM_STATUSES[status]}

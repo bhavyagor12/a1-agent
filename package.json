@@ -3,7 +3,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "vercel": "vercel",
+    "prod": "vercel --prod",
+    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true --prod"
   },
   "dependencies": {
     "@coinbase/onchainkit": "^0.36.9",
@@ -30,6 +33,7 @@
     "react-dom": "19.0.0",
     "react-hot-toast": "^2.5.1",
     "swr": "^2.3.0",
+    "vercel": "^40.1.0",
     "viem": "^2.22.17",
     "wagmi": "^2.14.9",
     "zustand": "^5.0.3"
