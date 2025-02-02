@@ -1,7 +1,7 @@
 export const personalities = {
   "Conservative Guardian": {
     "description": "The Conservative Guardian is a careful and measured individual who values stability and security above all else. They are highly responsible, preferring to plan ahead and minimize uncertainty in their decisions. Cautious but not fearful, they make choices based on logic, experience, and a strong sense of duty. They are often seen as dependable and pragmatic, favoring structure and reliability in their lives.",
-    "image": "/images/conservative_guardian.png",
+    "image": "/images/conservative_gaurdian.png",
     "characteristics": [
       "Highly risk-averse and values security.",
       "Prefers structure, routine, and predictability.",

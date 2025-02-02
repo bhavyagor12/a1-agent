@@ -83,7 +83,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
       return response.json();
     },
     onSuccess: () => {
-      push("/quiz/result");
+      push("/home");
     },
     onError: (error) => {
       console.error("Error submitting answer:", error);

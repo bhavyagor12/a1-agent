@@ -19,6 +19,9 @@ export default function Result() {
       return response.json();
     },
   });
+  if (!data) {
+    redirect("/quiz/1");
+  }
   const personalityKey = data.personality as keyof typeof personalities;
   const imageSrc =
     personalities[personalityKey as keyof typeof personalities]?.image ??
@@ -38,7 +41,7 @@ export default function Result() {
     link.click();
 
     const scoresText = `
-    Realistic Thinking: ${data.RT}
+    Risk Tolerance : ${data.RT}
     Loss Aversion: ${data.LA}
     Decision Making: ${data.DMS}
     Time Horizon Bias: ${data.THB}
@@ -61,7 +64,7 @@ export default function Result() {
       <div className="flex flex-col gap-3">
         <h1 className="text-[12px] font-bold text-white">Scores</h1>
         <div className="flex overflow-x-auto gap-4 mt-3 pb-4 scrollbar-hide flex-shrink-0">
-          <RadialProgress value={data.RT} label="Realistic Thinking" />
+          <RadialProgress value={data.RT} label="Risk Tolerance" />
           <RadialProgress value={data.LA} label="Loss aversion" />
           <RadialProgress value={data.DMS} label="Decision making" />
           <RadialProgress value={data.THB} label="Time Horizon Bias" />

@@ -25,7 +25,7 @@ export default function Landing() {
     >
       <Image src={baseLogo} alt="logo" width={50} height={50} />
       <h2 className={pacifico.className}>asset.</h2>
-      <h1 className="text-[48px] font-bold">
+      <h1 className="text-[34px] font-bold">
         Allocate Assets <span className={pacifico.className}>Smart</span> and{" "}
         <span className={pacifico.className}>Simple</span>.
       </h1>
