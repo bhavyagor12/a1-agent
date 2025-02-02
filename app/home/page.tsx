@@ -70,6 +70,16 @@ export default function Home() {
         <h1 className="text-[12px] font-bold text-white">Defi Positions</h1>
         <MobileStatsCard address={address as Address} />
       </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            Open Chat
+          </button>
+        </DialogTrigger>
+        <DialogContent className="bg-gray-800 p-0 rounded-lg w-[360px] h-[640px]">
+          <ChatModal />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

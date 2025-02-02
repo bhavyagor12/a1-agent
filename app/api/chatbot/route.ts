@@ -3,7 +3,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import { depositUSDCToAave } from "@/utils/chatbot/utils";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { HumanMessage, AIMessage } from "@langchain/core/messages";
+import { HumanMessage } from "@langchain/core/messages";
 
 
 let conversationHistory: { [key: string]: any[] } = {};
