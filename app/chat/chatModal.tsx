@@ -1,10 +1,16 @@
-'use client'
+"use client";
+import { Loader } from "lucide-react";
 // components/ChatModal.tsx
 import { useState, useEffect, useRef } from "react";
 
-export function ChatModal(userId: string) {
+export function ChatModal({ userId }: { userId: string }) {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any[]>([{
+    lc: 1,
+    type: "constructor",
+    id: ["langchain_core", "messages", "BotMessage"],
+    kwargs: { content: "Hello! How can I help you today?" },
+  }]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -65,8 +71,7 @@ export function ChatModal(userId: string) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Chat messages area */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-2">
+      <div className="flex-1 p-4 h-full overflow-y-auto space-y-2">
         {messages.map((msg, idx) => {
           const alignment = isUserMessage(msg)
             ? "self-end bg-blue-600"
@@ -83,14 +88,6 @@ export function ChatModal(userId: string) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Loading spinner */}
-      {isLoading && (
-        <div className="flex items-center justify-center p-2">
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div>
-        </div>
-      )}
-
-      {/* Input area */}
       <div className="flex border-t border-gray-700">
         <input
           type="text"
@@ -104,7 +101,7 @@ export function ChatModal(userId: string) {
           onClick={sendMessage}
           className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600"
         >
-          Send
+          {isLoading ? <Loader /> : "Send"}
         </button>
       </div>
     </div>

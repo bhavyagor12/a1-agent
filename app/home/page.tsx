@@ -11,6 +11,14 @@ import useSWR from "swr";
 import { Address, isAddress } from "viem";
 import { useAccount } from "wagmi";
 import * as chains from "viem/chains";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ChatModal } from "../chat/chatModal";
+import { Bot } from "lucide-react";
 
 export default function Home() {
   const { address } = useAccount();
@@ -72,12 +80,11 @@ export default function Home() {
       </div>
       <Dialog>
         <DialogTrigger asChild>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-            Open Chat
-          </button>
+          <Bot className="absolute bottom-4 right-4 z-50" />
         </DialogTrigger>
         <DialogContent className="bg-gray-800 p-0 rounded-lg w-[360px] h-[640px]">
-          <ChatModal />
+          <DialogTitle></DialogTitle>
+          <ChatModal userId={address as string} />
         </DialogContent>
       </Dialog>
     </div>
