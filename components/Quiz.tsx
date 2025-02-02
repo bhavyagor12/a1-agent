@@ -6,6 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { notification } from "@/utils/notification";
 import Loading from "@/app/loading";
+import { useAccount } from "wagmi";
 
 interface Option {
   option: string;
@@ -25,6 +26,7 @@ function formatQuestionId(id: string) {
 }
 
 export default function Quiz({ questionId }: { questionId: string }) {
+  const { address } = useAccount();
   const { push } = useRouter();
   const { data: question } = useQuery({
     queryKey: ["question", questionId],
@@ -49,7 +51,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
     const response = await fetch("/api/quiz/answer", {
       method: "POST",
       body: JSON.stringify({
-        userId: "123",
+        userId: address,
         questionId,
         option: selectedOption,
       }),
@@ -69,50 +71,48 @@ export default function Quiz({ questionId }: { questionId: string }) {
   if (!question) {
     return (
       <div className="flex items-center justify-center h-[100vh]">
-        <Loading /> 
+        <Loading />
       </div>
     );
   }
   return (
-    <div
-      className="p-6 bg-white text-black rounded-2xl w-full shadow-lg relative h-[100vh] flex flex-col items-center justify-around"
-      style={{
-        backgroundImage: `url('${question.image}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="flex flex-col  text-white items-center">
-        <h2 className="text-lg font-bold text-center mb-4">
-          {formatQuestionId(question.id)}
-        </h2>
-        <h2 className="text-lg font-bold text-center mb-4">
-          {question.question}
-        </h2>
-      </div>
+    <div className="relative w-full h-[100vh] flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="absolute top-0 left-0 w-full h-full opacity-30 bg-cover bg-center"
+        style={{ backgroundImage: `url('${question.image}')` }}
+      ></div>
 
-      {/* Input Fields */}
-      <div className="space-y-3">
-        {question.options.map((option: Option) => (
-          <div
-            key={option.option}
-            onClick={() => setSelectedOption(option.option)}
-            className={`flex items-center justify-between p-3 rounded-lg cursor-pointer border-2 transition-all 
-    ${selectedOption === option.option ? "border-blue-500 bg-blue-100" : "border-gray-300 bg-white hover:border-gray-400"}`}
-          >
-            {option.text}
-          </div>
-        ))}
-      </div>
+      <div className="relative z-10 flex flex-col items-center justify-around w-full h-full max-w-lg p-6 rounded-lg shadow-md">
+        <div className="text-center mb-6">
+          <h2 className="text-lg font-bold mb-2 text-white">
+            {formatQuestionId(question.id)}
+          </h2>
+          <h2 className="text-[14px] font-bold text-white">
+            {question.question}
+          </h2>
+        </div>
 
-      <Button
-        className="w-full mt-4"
-        onClick={() => {
-          submitAndAnswerMutation.mutate();
-        }}
-      >
-        Submit
-      </Button>
+        <div className="w-full space-y-3">
+          {question.options.map((option) => (
+            <div
+              key={option.option}
+              onClick={() => setSelectedOption(option.option)}
+              className={`flex items-center text-center p-3 rounded-lg cursor-pointer border-2 transition-all text-[12px] text-gray-900
+                ${selectedOption === option.option ? "border-blue-500 bg-blue-100" : "border-gray-300 bg-white hover:border-gray-400"}`}
+            >
+              {option.text}
+            </div>
+          ))}
+        </div>
+
+        <Button
+          className="w-full mt-4"
+          onClick={() => submitAndAnswerMutation.mutate()}
+        >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }

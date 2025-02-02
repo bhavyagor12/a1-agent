@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { Address, isAddress } from "viem";
 import { useAccount } from "wagmi";
+import * as chains from "viem/chains";
 
 export default function Home() {
   const { address } = useAccount();
@@ -43,7 +44,7 @@ export default function Home() {
       <div className="flex flex-col gap-3">
         <h1 className="text-[12px] font-bold text-white">Onchain activity</h1>{" "}
         <StatsCircles address={address as Address} />
-        {/* <NetworkCard address={address as Address} chain={chains.base} /> */}
+        <NetworkCard address={address as Address} chain={chains.base} />
       </div>
       <div className="flex flex-col gap-2">
         <h1 className="text-[12px] font-bold text-white">
