@@ -19,33 +19,19 @@ export function getQuizData() {
   return quizData;
 }
 
-export async function createUserSession(userId: string) {
-  const supabase = createClient();
-  const { error } = await supabase
-    .from("user_sessions")
-    .insert([{ user_id: userId }]);
-  if(error) {
-    console.error("Error creating user session:", error);
-    return error;
-  }
-  return true;
-}
-
-// Get user session from Supabase
 export async function getUserSession(userId: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("user_sessions")
     .select("question_id, answer")
-    .eq("user_id", userId)
-    .limit(1);
+    .eq("user_id", userId); // Removed .limit(10)
 
   if (error) {
     console.error("Error fetching user session:", error);
     return null;
   }
 
-  return { answers: data[0] || {} };
+  return { answers: data || [] }; // Returning all the answers
 }
 
 // Save user answer to Supabase
@@ -92,29 +78,32 @@ export function computeMaxScore(metric: string) {
 // Compute user score for a metric
 export async function computeUserScore(userId: string, metric: string) {
   const session = await getUserSession(userId);
-  const userAnswers: { [key: string]: string } = session ? session.answers : {};
-  const quizData = getQuizData();
 
+  const userAnswers = session ? session.answers : [];
+  const quizData = getQuizData();
   let totalScore = 0;
-  quizData.questions.forEach(
-    (question: {
-      metrics: string | string[];
-      id: string | number;
-      options: any[];
-    }) => {
-      if (question.metrics.includes(metric)) {
-        const answerOption = userAnswers[question.id];
-        if (answerOption) {
-          const selectedOption = question.options.find(
-            (opt) => opt.option === answerOption,
-          );
-          if (selectedOption) {
-            totalScore += selectedOption.scores[metric] || 0;
-          }
-        }
-      }
-    },
+
+  // Create a unique set of answers by filtering out duplicates based on question_id
+  const uniqueAnswers = Array.from(
+    new Map(userAnswers.map((item) => [item.question_id, item])).values(),
   );
 
+  // Iterate through each question in the quiz
+  quizData.questions.forEach((question: any) => {
+    if (question.metrics.includes(metric)) {
+      const userAnswer = uniqueAnswers.find(
+        (ans) => ans.question_id === question.id,
+      );
+      if (userAnswer) {
+        const answerOption = userAnswer.answer;
+        const selectedOption = question.options.find(
+          (opt: any) => opt.option === answerOption,
+        );
+        if (selectedOption) {
+          totalScore += selectedOption.scores[metric] || 0;
+        }
+      }
+    }
+  });
   return totalScore;
 }

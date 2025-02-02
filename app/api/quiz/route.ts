@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { createUserSession, getQuizData } from "../../../utils/quiz/index.ts";
+import { getQuizData } from "../../../utils/quiz/index.ts";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
@@ -9,14 +9,6 @@ export async function GET(req: NextRequest) {
     return new Response(JSON.stringify({ error: "userId is required" }), {
       status: 400,
     });
-  }
-
-  const sessionCreated = await createUserSession(userId);
-  if (!sessionCreated) {
-    return new Response(
-      JSON.stringify({ error: "Failed to create user session" }),
-      { status: 500 },
-    );
   }
 
   const quizData = await getQuizData();

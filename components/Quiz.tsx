@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { notification } from "@/utils/notification";
 import Loading from "@/app/loading";
 import { useAccount } from "wagmi";
+import { BackwardIcon } from "@heroicons/react/20/solid";
+import { XIcon } from "lucide-react";
 
 interface Option {
   option: string;
@@ -27,7 +29,7 @@ function formatQuestionId(id: string) {
 
 export default function Quiz({ questionId }: { questionId: string }) {
   const { address } = useAccount();
-  const { push } = useRouter();
+  const { push, back } = useRouter();
   const { data: question } = useQuery({
     queryKey: ["question", questionId],
     queryFn: async () => {
@@ -45,9 +47,6 @@ export default function Quiz({ questionId }: { questionId: string }) {
       notification.error("Please select an option");
       return;
     }
-    if (questionId === "10") {
-      return;
-    }
     const response = await fetch("/api/quiz/answer", {
       method: "POST",
       body: JSON.stringify({
@@ -58,11 +57,33 @@ export default function Quiz({ questionId }: { questionId: string }) {
     });
     return response.json();
   };
-  const submitAndAnswerMutation = useMutation({
+  const answerMutation = useMutation({
     mutationFn: () => submitAnswer(),
     onSuccess: () => {
       if (!selectedOption) return;
+      if (questionId === "10") {
+        submitMutation.mutate();
+        return;
+      }
       push(`/quiz/${Number(questionId) + 1}`);
+    },
+    onError: (error) => {
+      console.error("Error submitting answer:", error);
+    },
+  });
+
+  const submitMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/quiz/submit", {
+        method: "POST",
+        body: JSON.stringify({
+          userId: address,
+        }),
+      });
+      return response.json();
+    },
+    onSuccess: () => {
+      // push("/result");
     },
     onError: (error) => {
       console.error("Error submitting answer:", error);
@@ -77,9 +98,16 @@ export default function Quiz({ questionId }: { questionId: string }) {
   }
   return (
     <div className="relative w-full h-[100vh] flex flex-col items-center justify-center p-6 rounded-2xl shadow-lg overflow-hidden">
-      {/* Background Image */}
+      <BackwardIcon
+        className="absolute top-2 left-4 w-6 h-6 cursor-pointer z-10"
+        onClick={() => back()}
+      />
+      <XIcon
+        className="absolute top-2 right-4 w-6 h-6 cursor-pointer z-10"
+        onClick={() => push("/home")}
+      />
       <div
-        className="absolute top-0 left-0 w-full h-full opacity-30 bg-cover bg-center"
+        className="absolute top-0 left-0 w-full h-full opacity-30 bg-cover bg-center z-[-1]"
         style={{ backgroundImage: `url('${question.image}')` }}
       ></div>
 
@@ -106,10 +134,7 @@ export default function Quiz({ questionId }: { questionId: string }) {
           ))}
         </div>
 
-        <Button
-          className="w-full mt-4"
-          onClick={() => submitAndAnswerMutation.mutate()}
-        >
+        <Button className="w-full mt-4" onClick={() => answerMutation.mutate()}>
           Submit
         </Button>
       </div>

@@ -20,7 +20,6 @@ export async function POST(req: Request) {
     );
   }
 
-  const userAnswers = session.answers;
   const metricsList = ["RT", "LA", "THB", "DMS"];
   const metricResults: { [key: string]: number } = {};
 
