@@ -1,5 +1,6 @@
 "use client";
 import { personalities } from "@/assets/personalities";
+import DefiStrategyCard from "@/components/defi-strategy";
 import Header from "@/components/Header";
 import PersonalityProfile from "@/components/PersonalityProfile";
 import RadialProgress from "@/components/radical-progress";
@@ -54,8 +55,20 @@ export default function Result() {
             Personality Traits
           </h1>
           <div className="flex overflow-x-auto gap-4 mt-3 pb-4 scrollbar-hide flex-shrink-0">
-            <PersonalityProfile characteristics={personalities[personalityKey].characteristics} />
+            <PersonalityProfile
+              characteristics={personalities[personalityKey].characteristics}
+            />
           </div>
+        </div>
+        <div className="flex flex-col gap-1 mt-4">
+          <h1 className="text-[14px] font-bold text-gray-400">
+            Suggested DeFi Strategy
+          </h1>
+
+          <DefiStrategyCard
+            strategy={personalities[personalityKey].defi.strategy}
+            desiTwist={personalities[personalityKey].defi.desi_twist}
+          />
         </div>
       </div>
     </div>
