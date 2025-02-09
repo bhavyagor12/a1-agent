@@ -1,8 +1,5 @@
-/* ignor */
 import { ethers } from "ethers";
 import dotenv from "dotenv";
-import { z } from "zod";
-import { DynamicStructuredTool } from "@langchain/core/tools";
 
 dotenv.config();
 
@@ -14,7 +11,6 @@ if (!RPC_URL || !PRIVATE_KEY || !AAVE_LENDING_POOL_ADDRESS) {
 
 const provider = new ethers.JsonRpcProvider(RPC_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
-
 
 const tokenAbi = [
   "function name() view returns (string)",
@@ -93,28 +89,3 @@ export async function supplyWithPermit(amount: Number, assetAddress: string) {
 }
 
 
-export const depositUSDCToAave = new DynamicStructuredTool({
-    name: "deposit-usdc-aave",
-    description: "Deposits a specified amount of USDC tokens to Aave's protocol",
-    schema: z.object({
-      amount: z.number().describe("The amount of USDC tokens to deposit"),
-      token: z.string().describe("The token to deposit (e.g., 'USDC')"),
-    }),
-    func: async ({ amount, token }) => {
-      try {
-        if (token !== "USDC") {
-          throw new Error("Only USDC is supported for this operation");
-        }
-        const token_address = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-        const {receipt, txHash} = await supplyWithPermit(amount, token_address);
-        console.log(receipt);
-        if (receipt) {
-          return `Deposited ${amount} ${token} to Aave on tx hash: ${txHash}`;
-        }
-        return `Deposited ${amount} ${token} to Aave on tx hash: ${txHash}`;
-      } catch (error) {
-        return error
-      }
-    }
-  });
-  
